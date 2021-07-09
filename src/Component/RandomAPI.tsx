@@ -1,3 +1,4 @@
+import { throws } from 'assert';
 import axios from 'axios';
 import React,{memo} from 'react';
 import { useEffect } from 'react';
@@ -10,12 +11,15 @@ pagenumber:number;
 
 const RandomAPI:React.FC<Props>=(props) => {
     const [user,setUserList] = useState<any>([]);
+    const[error1,setError] = useState("");
     useEffect( ()=>{
   axios.get("https://randomuser.me/api/?inc=id,email,gender,name&page=" +props.pagenumber+"&results=20")
      .then((docs)=> {
-setUserList(docs.data.results)}).catch((err) =>
+setUserList(docs.data.results)})
+.catch((err) =>
 {
     console.log("something went wrong" + err)
+    throws (() => "something went wrong");
 })
 
 
@@ -23,6 +27,7 @@ setUserList(docs.data.results)}).catch((err) =>
     
     return(
         <>
+        
         <div className="pt-10">
             <div className="text-center
             mb-5 text-4xl text-transparent
